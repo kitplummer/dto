@@ -32,10 +32,12 @@ Interact with a Ditto database.
 Usage: dto [OPTIONS] [COMMAND]
 
 Commands:
-  repl         Interact with Ditto via REPL interface
-  collections  Interact with Ditto's collections for your App ID
+  repl         Simple REPL interface for interacting with Ditto data
+  collections  View Ditto's local collections for your App ID
   configure    Create or show dto's configuration file
-  utils        Interface with utilities and presence information
+  execute      Execute a single synchronous query for a given configured APP ID
+  observe      Observe data on a specific query for a given configured APP ID
+  utils        Ditto database utilities and information
   help         Print this message or the help of the given subcommand(s)
 
 Options:
@@ -45,7 +47,18 @@ Options:
   -V, --version        Print version
 ```
 
-TODO: Update this ^^
+### Execute
+Run a simple synchronous query against the local database.
+
+```
+❯ ./target/debug/dto execute -q 'SELECT * FROM stuff'
+[{"_id":"655e8ffb00abc84c005c79cc","hello":"world"},{"_id":"655e90af00e2d012007e3c13","hello":"world"},{"_id":"656690d700e648800088d752","hello":"world"},{"_id":"65677fc800fb63c700cf4d4c","hello":"world"},{"_id":"6568d435005ef460005a5372","hello":"world"},{"_id":"6568d4e200b94b0600b0b3df","hello":"world"},{"_id":"6568dd040060b9570064c3e6","hello":"world"},{"_id":"6568e30300dbe14700fdc899","hello":"world"}]
+```
+
+### Observe
+Like the `execute` command, `observe` will execute a query, but following a
+subscription, and then will register an observer and report with updates as they
+are synced from a peer.
 
 ### Collections
 
