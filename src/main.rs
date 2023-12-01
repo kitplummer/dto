@@ -53,8 +53,8 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Simple REPL interface for interacting with Ditto data
-    Repl {},
+    // /// Simple REPL interface for interacting with Ditto data
+    // Repl {},
     /// View Ditto's local collections for your App ID
     Collections {},
     /// Create or show dto's configuration file
@@ -191,9 +191,10 @@ fn main() -> anyhow::Result<()> {
     let store = ditto.store();
 
     match &cli.command {
-        Some(Commands::Repl {}) => {
-            let _repl = start_repl(ditto);
-        }
+        // Pausing dev on the REPL until have working inserts from execute command
+        // Some(Commands::Repl {}) => {
+        //     let _repl = start_repl(ditto);
+        // }
         Some(Commands::Collections {}) => {
             collection::list_collections(store);
         }

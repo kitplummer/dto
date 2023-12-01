@@ -32,7 +32,6 @@ Interact with a Ditto database.
 Usage: dto [OPTIONS] [COMMAND]
 
 Commands:
-  repl         Simple REPL interface for interacting with Ditto data
   collections  View Ditto's local collections for your App ID
   configure    Create or show dto's configuration file
   execute      Execute a single synchronous query for a given configured APP ID
