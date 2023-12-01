@@ -1,0 +1,24 @@
+[package]
+name = "dto"
+version = "0.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.4.8", features = ["derive"] }
+assert_cmd = "2.0"
+predicates = "3.0"
+toml = "0.7"
+home = "0.5"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+rustyline = { version = "12.0.0", features = ["derive"] }
+colored = "2.0"
+futures = "0.3"
+regex = "1.0"
+sqlparser = "0.4"
+dittolive-ditto = { version = "4.0.0", path = "../ditto/rust/dittolive-ditto" }
+dittolive-ditto-sys = { version = "4.0.0", path = "../ditto/rust/dittolive-ditto-sys/external"}
+
