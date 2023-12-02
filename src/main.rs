@@ -1,5 +1,5 @@
 use anyhow::Context;
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueEnum};
 use colored::Colorize;
 use dittolive_ditto::{identity::*, prelude::*};
 use rustyline::completion::FilenameCompleter;
@@ -11,8 +11,8 @@ use sqlparser::parser::Parser as SqlParser;
 use rustyline::validate::MatchingBracketValidator;
 use rustyline::{Config, Editor};
 use std::path::PathBuf;
-use std::process;
 use std::{self, str::FromStr, sync::Arc};
+use std::{fmt, process};
 
 use rustyline::{Completer, Helper, Hinter, Validator};
 
@@ -51,6 +51,28 @@ struct Cli {
     command: Option<Commands>,
 }
 
+// For use by the Presence command
+#[derive(clap::Parser)]
+struct Args {
+    #[clap(value_enum)]
+    scope: PeerScope,
+}
+#[derive(ValueEnum, Clone, Copy, Debug)]
+enum PeerScope {
+    All,
+    Local,
+    Remote,
+}
+impl fmt::Display for PeerScope {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            PeerScope::All => write!(f, "all"),
+            PeerScope::Local => write!(f, "local"),
+            PeerScope::Remote => write!(f, "remote"),
+        }
+    }
+}
+
 #[derive(Subcommand)]
 enum Commands {
     // /// Simple REPL interface for interacting with Ditto data
@@ -77,6 +99,12 @@ enum Commands {
         /// SQL query for data to be observed
         #[arg(short, long)]
         query: String,
+    },
+    /// Observe local and remote peer metadata
+    Presence {
+        /// See all, local or remote metadata
+        #[arg(short, long)]
+        scope: PeerScope,
     },
     /// Ditto database utilities and information
     Utils {
@@ -243,6 +271,17 @@ fn main() -> anyhow::Result<()> {
                 }
             };
         }
+        Some(Commands::Presence { scope }) => match scope {
+            PeerScope::All => {
+                presence::presence(PeerScope::All.to_string(), &ditto);
+            }
+            PeerScope::Local => {
+                presence::presence(PeerScope::Local.to_string(), &ditto);
+            }
+            PeerScope::Remote => {
+                presence::presence(PeerScope::Remote.to_string(), &ditto);
+            }
+        },
         Some(Commands::Utils { storage }) => {
             if *storage {
                 utils::show_storage_resources_used(store);

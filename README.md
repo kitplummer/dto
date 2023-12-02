@@ -36,6 +36,7 @@ Commands:
   configure    Create or show dto's configuration file
   execute      Execute a single synchronous query for a given configured APP ID
   observe      Observe data on a specific query for a given configured APP ID
+  presence     Observe local and remote peer metadata
   utils        Ditto database utilities and information
   help         Print this message or the help of the given subcommand(s)
 
