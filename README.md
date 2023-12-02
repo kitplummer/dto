@@ -36,6 +36,7 @@ Commands:
   configure    Create or show dto's configuration file
   execute      Execute a single synchronous query for a given configured APP ID
   observe      Observe data on a specific query for a given configured APP ID
+  presence     Observe local and remote peer metadata
   utils        Ditto database utilities and information
   help         Print this message or the help of the given subcommand(s)
 
@@ -58,6 +59,27 @@ Run a simple synchronous query against the local database.
 Like the `execute` command, `observe` will execute a query, but following a
 subscription, and then will register an observer and report with updates as they
 are synced from a peer.
+
+### Presence
+Presence information is useful in debugging and testing things in Ditto.
+
+Local peer information?
+```
+❯ ./target/debug/dto presence -s local
+{"address":{"pubkey":[2,135,2,130,67,2,43,74,26,9,184,153,93,86,48,246,247,104,51,163,208,114,253,36,74,190,185,9,217,77,118,150,149,58,51,110,102,98],"siteId":18021064730814713115},"connections":[],"deviceName":"dto-cli","dittoSdkVersion":"4.5.0","isCompatible":true,"isConnectedToDittoCloud":false,"os":"macOS","peerKey":[2,135,2,130,67,2,43,74,26,9,184,153,93,86,48,246,247,104,51,163,208,114,253,36,74,190,185,9,217,77,118,150,149,58,51,110,102,98],"queryOverlapGroup":0}
+```
+
+Or how bout listening for remote peer activity and changes in the mesh?
+```
+❯ ./target/debug/dto presence -s remote
+mesh change observed (connected to BP? false.)
+remote peers:
+mesh change observed (connected to BP? true.)
+remote peers:
+  peer: ditto, type: AccessPoint, sdk:4.4.5
+mesh change observed (connected to BP? true.)
+remote peers:
+```
 
 ### Collections
 

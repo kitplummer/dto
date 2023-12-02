@@ -93,6 +93,18 @@ fn test_default_configuration_write() -> Result<(), Box<dyn std::error::Error>> 
 }
 
 #[test]
+fn test_presence_local() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("dto")?;
+    cmd.arg("presence");
+    cmd.arg("-s");
+    cmd.arg("local");
+    cmd.assert()
+        //.failure()
+        .stdout(predicates::str::contains("isConnectedToDittoCloud"));
+    Ok(())
+}
+
+#[test]
 fn test_utils_storage() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("dto")?;
     cmd.arg("utils");
