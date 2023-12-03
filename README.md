@@ -51,7 +51,7 @@ Options:
 Run a simple synchronous query against the local database.
 
 ```
-❯ ./target/debug/dto execute -q 'SELECT * FROM stuff'
+❯ ./target/debug/dto execute -q "SELECT * FROM stuff"
 [{"_id":"655e8ffb00abc84c005c79cc","hello":"world"},{"_id":"655e90af00e2d012007e3c13","hello":"world"},{"_id":"656690d700e648800088d752","hello":"world"},{"_id":"65677fc800fb63c700cf4d4c","hello":"world"},{"_id":"6568d435005ef460005a5372","hello":"world"},{"_id":"6568d4e200b94b0600b0b3df","hello":"world"},{"_id":"6568dd040060b9570064c3e6","hello":"world"},{"_id":"6568e30300dbe14700fdc899","hello":"world"}]
 ```
 

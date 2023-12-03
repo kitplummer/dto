@@ -47,6 +47,22 @@ fn test_execute_valid_query() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+fn test_execute_valid_query_where_clause() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("dto")?;
+    cmd.arg("execute");
+    cmd.arg("-q");
+    cmd.arg("SELECT * FROM stuff WHERE blah='world'");
+    cmd.assert()
+        //.failure()
+        .stdout(predicates::str::contains("blah"));
+    Ok(())
+}
+
+// Projections don't exist yet:
+// thread \'main\' panicked at \'called `Result::unwrap()` on an `Err` value: FFILegacyError { code: 8, message: \"<dql> Invalid query: `Projections other than wildcard (*) is not supported`. For more information on Ditto\'s query language see: https://docs.ditto.live/dql-guide\", kind: FfiLegacy }\', src/query.rs:6:65
+// Because Ditto returns a Document set, not a partial one.
+//
+#[test]
 fn test_execute_valid_query_with_field() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("dto")?;
     cmd.arg("execute");
@@ -54,7 +70,7 @@ fn test_execute_valid_query_with_field() -> Result<(), Box<dyn std::error::Error
     cmd.arg("SELECT hello FROM stuff");
     cmd.assert()
         //.failure()
-        .stdout(predicates::str::contains("hello"));
+        .stdout(predicates::str::contains("unsupported query"));
     Ok(())
 }
 
