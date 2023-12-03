@@ -47,6 +47,18 @@ fn test_execute_valid_query() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+fn test_execute_valid_query_with_field() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("dto")?;
+    cmd.arg("execute");
+    cmd.arg("-q");
+    cmd.arg("SELECT hello FROM stuff");
+    cmd.assert()
+        //.failure()
+        .stdout(predicates::str::contains("hello"));
+    Ok(())
+}
+
+#[test]
 fn test_execute_invalid_query() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("dto")?;
     cmd.arg("execute");
